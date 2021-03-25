@@ -1,21 +1,17 @@
 import React from 'react';
 import { Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
-import { List,ListInlineItem } from 'reactstrap';
+import { List, ListInlineItem } from 'reactstrap';
 
-class Detaildish extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
-    renderComment() {
-        const comments = this.props.selectedDishes.comments.map((comment) => {
+    function RenderComment(props) {
+        const comments = props.selectedDishes.comments.map((comment) => {
             return (
                 <div key={comment.id}>
                     <List type="unstyled" >
                         <li>--{comment.comment}</li>
                         <List type="inline">
                             <ListInlineItem>{comment.author}</ListInlineItem>
-                            <ListInlineItem>{comment.date}</ListInlineItem>
+                            <ListInlineItem>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</ListInlineItem>
                         </List>
                     </List>
                 </div>
@@ -27,33 +23,33 @@ class Detaildish extends React.Component {
                 {comments}
             </div>
         );
-
     }
-    render() {
+ function Detaildish(props){
+    if (props.selectedDishes != null) {
+        return (
+            <div className="container">
+            <div className="row">
+                <div className="col-12 col-md-5 m-1 ">
+                    <Card>
+                        <CardImg width="100%" src={props.selectedDishes.image} alt={props.selectedDishes.name} />
+                        <CardBody>
+                            <CardTitle>{props.selectedDishes.name}</CardTitle>
+                            <CardText>{props.selectedDishes.description}</CardText>
+                        </CardBody>
 
-        if (this.props.selectedDishes != null) {
-            return (
-                <div className="row">
-                    <div className="col-12 col-md-5 m-1 ">
-                        <Card>
-                            <CardImg width="100%" src={this.props.selectedDishes.image} alt={this.props.selectedDishes.name} />
-                            <CardBody>
-                                <CardTitle>{this.props.selectedDishes.name}</CardTitle>
-                                <CardText>{this.props.selectedDishes.description}</CardText>
-                            </CardBody>
-
-                        </Card>
-                    </div>
-                    {this.renderComment()}
+                    </Card>
                 </div>
-            );
-        } else {
-            return (
-                <div></div>
-            );
-        }
-
+                <RenderComment selectedDishes={props.selectedDishes}/>
+            </div>
+            </div>
+        );
+    } else {
+        return (
+            <div></div>
+        );
     }
-}
+ }
+        
+
 
 export default Detaildish;

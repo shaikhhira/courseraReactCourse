@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Card, CardBody, CardImg, CardImgOverlay, CardText, CardTitle } from 'reactstrap';
+import React from 'react';
+import { Card, CardImg, CardImgOverlay, CardText, CardTitle } from 'reactstrap';
 
 
 

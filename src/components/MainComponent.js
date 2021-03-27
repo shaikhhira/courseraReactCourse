@@ -11,6 +11,7 @@ import Detaildish from './DishDetailComponent';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Home from './HomeComponent';
 import Contact from './ContactComponent';
+import About from './AboutComponent';
 
 
 class Main extends React.Component {
@@ -49,6 +50,12 @@ class Main extends React.Component {
                     comment={this.state.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10))} />
             );
         }
+
+        const AboutPage = () => {
+            return (
+                <About leaders={this.state.leaders} />
+            );
+        }
         return (
             <div className="App">
                 <Header />
@@ -57,6 +64,7 @@ class Main extends React.Component {
                     <Route exact path="/menu" component={() => <Menu dishes={this.state.dishes} />} />
                     <Route path='/menu/:dishId' component={DishWithId} />
                     <Route path="/contactus" component={Contact} />
+                    <Route path="/aboutus" component={AboutPage} />
                     <Redirect to="/home" />
                 </Switch>
                 {/* <Menu dishes={this.state.dishes} onClick={(dishId) => this.onSelectedDishes(dishId)} />

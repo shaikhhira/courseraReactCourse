@@ -1,28 +1,44 @@
 import React from 'react';
-import { Jumbotron, NavItem } from 'reactstrap';
-import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse } from 'reactstrap';
+import { FormGroup, Input, Jumbotron, Label, NavItem } from 'reactstrap';
+import { Navbar, NavbarBrand, Nav, NavbarToggler,Button,Collapse,Modal,ModalBody,ModalHeader ,Form} from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isnacOpen: false
+            isNavOpen: false,
+            isModalOpen:false
         }
-        this.isToggler = this.isToggler.bind(this);
+        this.isTogglerNav = this.isTogglerNav.bind(this);
+        this.toggleModal=this.toggleModal.bind(this);
+        this.handleLogin=this.handleLogin.bind(this);
     }
 
-    isToggler() {
+    isTogglerNav() {
         this.setState({
             isNavOpen: !this.state.isNavOpen
         });
     }
+
+    toggleModal(){
+        this.setState({
+            isModalOpen:!this.state.isModalOpen
+        });
+    }
+    handleLogin(event){
+        this.toggleModal();
+        alert("Username: " +this.username.value + "password: "+ this.password.value 
+        + "Remember "+ this.remember.checked);
+        event.preventDefault();
+    }
+    
     render() {
         return (
             <>
                 <Navbar dark expand="md" >
                     <div className="container">
-                        <NavbarToggler onClick={this.isToggler} />
+                        <NavbarToggler onClick={this.isTogglerNav} />
                         <NavbarBrand className="mr-auto"  >
                             <img src="assests/images/logo.png" width="30" height="41" />
                         </NavbarBrand>
@@ -53,6 +69,9 @@ class Header extends React.Component {
                                     </NavLink>
                                 </NavItem>
                             </Nav>
+                            <Nav className="ml-auto" navbar>
+                                <Button outline className="fa fa-sign-in fa-lg" onClick={this.toggleModal} >Login</Button>
+                            </Nav>
                         </Collapse>
                     </div>
                 </Navbar>
@@ -67,6 +86,30 @@ class Header extends React.Component {
                         </div>
                     </div>
                 </Jumbotron>
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
+                    <ModalBody>
+                        <Form onSubmit={this.handleLogin}>
+                            <FormGroup>
+                                <Label htmlFor="username">Username</Label>
+                                <Input type="text" name="username" id="username"
+                                 innerRef={(input)=>this.username=input} ></Input>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label htmlFor="password">Password</Label>
+                                <Input type="password" name="password" id="password"
+                                innerRef={(input)=>this.password=input} ></Input>
+                            </FormGroup>
+                            <FormGroup check>
+                                <Label check></Label>
+                                <Input type="checkbox" name="remember" id="remember"
+                                innerRef={(input)=>this.remember=input} ></Input>
+                                <strong>Remember Me?</strong>
+                            </FormGroup>
+                            <Button type="submit" value="submit" color="primary" >Sign in</Button>
+                        </Form>
+                    </ModalBody>
+                </Modal>
             </>
         );
     }

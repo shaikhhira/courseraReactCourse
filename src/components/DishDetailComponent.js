@@ -16,7 +16,6 @@ function RenderComment(props) {
                         <ListInlineItem>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}</ListInlineItem>
                     </List>
                 </List>
-
             </div>
         );
     })
@@ -24,7 +23,7 @@ function RenderComment(props) {
         <div className="col-12 col-md-5 m-1">
             <h4>Comments</h4>
             {comments}
-            <CommentForm  />
+            <CommentForm dishId={props.dishId} addComment={props.addComment} />
         </div>
     );
 }
@@ -54,9 +53,9 @@ function Detaildish(props) {
                         </Card>
                     </div>
 
-                    <RenderComment comment={props.comment} />
-
-
+                    <RenderComment comment={props.comment} 
+                    dishId={props.dish.id} 
+                    addComment={props.addComment} />
                 </div>
             </div>
         );
@@ -88,8 +87,7 @@ class CommentForm extends React.Component {
         });
     }
     handleSubmit(values) {
-        console.log("Current state is:" + JSON.stringify(values));
-        alert("Current state is:" + JSON.stringify(values));
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
         this.setState({
             isModalOpen: !this.state.isModalOpen
         });

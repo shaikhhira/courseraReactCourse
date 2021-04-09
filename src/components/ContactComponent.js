@@ -1,7 +1,7 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Control, Form, Errors, actions } from 'react-redux-form';
 
 
 const required = (val) => val && val.length;
@@ -21,6 +21,7 @@ class Contact extends React.Component {
     handleSubmit(values) {
         console.log('Current State is: ' + JSON.stringify(values));
         alert('Current State is: ' + JSON.stringify(values));
+        this.props.resetFormFeedback();
     }
 
 
@@ -68,7 +69,7 @@ class Contact extends React.Component {
                         <h3>Send us your Feedback</h3>
                     </div>
                     <div className="col-12 col-md-9">
-                        <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+                        <Form model="feedback" onSubmit={(values) => this.handleSubmit(values)}>
                             <Row className="form-group">
                                 <Label htmlFor="firstname" md={2}>First Name</Label>
                                 <Col md={10}>
@@ -82,9 +83,9 @@ class Contact extends React.Component {
                                         className="text-danger"
                                         model='.firstname'
                                         messages={{
-                                            required : 'Field is required',
-                                            maxLength : 'Maximum length should be less than 10',
-                                            minLength:'Minimum length should be greater than 3'
+                                            required: 'Field is required',
+                                            maxLength: 'Maximum length should be less than 10',
+                                            minLength: 'Minimum length should be greater than 3'
                                         }} />
                                 </Col>
                             </Row>
@@ -101,9 +102,9 @@ class Contact extends React.Component {
                                         className="text-danger"
                                         model='.lastname'
                                         messages={{
-                                            required : 'Field is required',
-                                            maxLength : 'Maximum length should be less than 10',
-                                            minLength:'Minimum length should be greater than 3'
+                                            required: 'Field is required',
+                                            maxLength: 'Maximum length should be less than 10',
+                                            minLength: 'Minimum length should be greater than 3'
                                         }} />
                                 </Col>
                             </Row>
@@ -120,8 +121,8 @@ class Contact extends React.Component {
                                         className="text-danger"
                                         model='.telnum'
                                         messages={{
-                                            required : 'Field is required',
-                                            isNumber:'Field must contain only numbers'
+                                            required: 'Field is required',
+                                            isNumber: 'Field must contain only numbers'
                                         }} />
                                 </Col>
                             </Row>
@@ -138,8 +139,8 @@ class Contact extends React.Component {
                                         className="text-danger"
                                         model='.email'
                                         messages={{
-                                            required : 'Field is required',
-                                            validEmail:'Invalid Email'
+                                            required: 'Field is required',
+                                            validEmail: 'Invalid Email'
                                         }} />
                                 </Col>
                             </Row>
@@ -177,7 +178,7 @@ class Contact extends React.Component {
                                     </Button>
                                 </Col>
                             </Row>
-                        </LocalForm>
+                        </Form>
                     </div>
                 </div>
             </div>
